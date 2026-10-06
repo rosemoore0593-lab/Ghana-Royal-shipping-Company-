@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghana Royal Shipping | Track Your Shipment</title>
+
+<style>
+:root{
+    --green:#063c2b;
+    --green2:#08734d;
+    --lime:#9be36a;
+    --gold:#d8b45a;
+    --dark:#031d16;
+    --light:#f5f8f6;
+    --text:#18352b;
+    --muted:#718078;
+    --white:#ffffff;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:var(--light);
+    color:var(--text);
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* NAVIGATION */
+
+.navbar{
+    height:78px;
+    background:rgba(3,29,22,.96);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    color:white;
+    position:relative;
+    z-index:10;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:48px;
+    height:48px;
+}
+
+.logo svg{
+    width:100%;
+    height:100%;
+}
+
+.brand-text strong{
+    display:block;
+    font-size:17px;
+    letter-spacing:1.2px;
+}
+
+.brand-text span{
+    display:block;
+    color:var(--gold);
+    font-size:9px;
+    letter-spacing:3px;
+    margin-top:2px;
+}
+
+.nav-links{
+    display:flex;
+    gap:32px;
+    align-items:center;
+}
+
+.nav-links a{
+    color:#e9f0ed;
+    font-size:14px;
+}
+
+.nav-links a:hover{
+    color:var(--lime);
+}
+
+.nav-track{
+    background:var(--lime);
+    color:#163c24!important;
+    padding:12px 18px;
+    border-radius:25px;
+    font-weight:bold;
+}
+
+/* HERO */
+
+.hero{
+    min-height:650px;
+    position:relative;
+    overflow:hidden;
+    color:white;
+    display:flex;
+    align-items:center;
+    background:
+        radial-gradient(circle at 82% 45%,rgba(155,227,106,.16),transparent 25%),
+        radial-gradient(circle at 65% 10%,rgba(216,180,90,.12),transparent 20%),
+        linear-gradient(135deg,#031f17,#075238 55%,#0b7450);
+}
+
+.hero:before{
+    content:"";
+    position:absolute;
+    width:580px;
+    height:580px;
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:50%;
+    right:-130px;
+    top:40px;
+}
+
+.hero:after{
+    content:"";
+    position:absolute;
+    width:420px;
+    height:420px;
+    border:1px dashed rgba(155,227,106,.25);
+    border-radius:50%;
+    right:-45px;
+    top:120px;
+}
+
+.world{
+    position:absolute;
+    right:7%;
+    top:95px;
+    font-size:260px;
+    opacity:.09;
+    filter:grayscale(1);
+}
+
+.route{
+    position:absolute;
+    right:4%;
+    top:260px;
+    width:580px;
+    height:220px;
+    border-top:2px dashed rgba(155,227,106,.4);
+    border-radius:50%;
+    transform:rotate(-12deg);
+}
+
+.route:before{
+    content:"✈";
+    position:absolute;
+    right:48%;
+    top:-35px;
+    font-size:30px;
+    color:var(--lime);
+    transform:rotate(18deg);
+    animation:fly 5s infinite ease-in-out;
+}
+
+.package{
+    position:absolute;
+    right:15%;
+    bottom:95px;
+    font-size:65px;
+    filter:drop-shadow(0 15px 15px rgba(0,0,0,.3));
+    animation:float 4s infinite ease-in-out;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0) rotate(-3deg)}
+    50%{transform:translateY(-15px) rotate(3deg)}
+}
+
+@keyframes fly{
+    0%,100%{transform:translateX(0) rotate(18deg)}
+    50%{transform:translateX(80px) translateY(-20px) rotate(18deg)}
+}
+
+.hero-content{
+    position:relative;
+    z-index:3;
+    width:90%;
+    max-width:1150px;
+    margin:auto;
+}
+
+.eyebrow{
+    color:var(--lime);
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-size:58px;
+    line-height:1.05;
+    max-width:690px;
+    margin-bottom:22px;
+}
+
+.hero h1 span{
+    color:var(--lime);
+}
+
+.hero p{
+    max-width:610px;
+    color:#d7e5df;
+    font-size:17px;
+    line-height:1.7;
+    margin-bottom:30px;
+}
+
+.quote{
+    font-style:italic;
+    color:#d8b45a!important;
+    font-weight:bold;
+    margin-bottom:28px!important;
+}
+
+/* TRACK BOX */
+
+.track-box{
+    width:min(650px,100%);
+    background:white;
+    padding:9px;
+    border-radius:15px;
+    display:flex;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.track-box input{
+    flex:1;
+    border:none;
+    outline:none;
+    padding:18px;
+    font-size:15px;
+    color:#18352b;
+    min-width:0;
+}
+
+.track-box button{
+    border:none;
+    background:var(--green2);
+    color:white;
+    padding:0 25px;
+    border-radius:11px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.track-box button:hover{
+    background:#064b35;
+    transform:translateY(-1px);
+}
+
+/* FEATURES */
+
+.features{
+    background:white;
+    padding:75px 6%;
+}
+
+.section-title{
+    text-align:center;
+    max-width:650px;
+    margin:0 auto 45px;
+}
+
+.section-title small{
+    color:var(--green2);
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.section-title h2{
+    font-size:35px;
+    margin:10px 0;
+    color:#15382c;
+}
+
+.section-title p{
+    color:var(--muted);
+    line-height:1.7;
+}
+
+.feature-grid{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.feature{
+    padding:30px;
+    border:1px solid #e4ebe7;
+    border-radius:18px;
+    background:#fff;
+    transition:.25s;
+}
+
+.feature:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px rgba(5,50,35,.09);
+}
+
+.icon{
+    width:52px;
+    height:52px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#e9f7df;
+    font-size:25px;
+    margin-bottom:18px;
+}
+
+.feature h3{
+    margin-bottom:10px;
+}
+
+.feature p{
+    color:var(--muted);
+    line-height:1.6;
+    font-size:14px;
+}
+
+/* ABOUT */
+
+.about{
+    padding:80px 6%;
+    background:#edf4f0;
+}
+
+.about-inner{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:center;
+}
+
+.about h2{
+    font-size:38px;
+    margin:12px 0 20px;
+}
+
+.about p{
+    color:#66756e;
+    line-height:1.8;
+    margin-bottom:15px;
+}
+
+.about-card{
+    min-height:330px;
+    border-radius:25px;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 65% 45%,rgba(155,227,106,.3),transparent 22%),
+        linear-gradient(135deg,#063323,#0b6b49);
+    box-shadow:0 20px 45px rgba(0,0,0,.12);
+}
+
+.about-card .globe{
+    position:absolute;
+    font-size:230px;
+    right:20px;
+    top:30px;
+    opacity:.14;
+}
+
+.about-card .mini-route{
+    position:absolute;
+    left:45px;
+    top:160px;
+    width:70%;
+    border-top:2px dashed rgba(155,227,106,.65);
+    transform:rotate(-10deg);
+}
+
+.about-card .mini-package{
+    position:absolute;
+    right:70px;
+    bottom:55px;
+    font-size:52px;
+}
+
+/* FOOTER */
+
+footer{
+    background:#031d16;
+    color:#b9c9c2;
+    padding:45px 6% 25px;
+}
+
+.footer-inner{
+    max-width:1100px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    gap:30px;
+}
+
+.footer-brand{
+    max-width:400px;
+}
+
+.footer-brand h3{
+    color:white;
+    margin-bottom:10px;
+}
+
+.footer-brand p{
+    font-size:13px;
+    line-height:1.7;
+}
+
+.footer-links{
+    display:flex;
+    gap:35px;
+}
+
+.footer-links a{
+    font-size:13px;
+}
+
+.copyright{
+    max-width:1100px;
+    margin:35px auto 0;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,.1);
+    font-size:11px;
+    color:#82928b;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .navbar{
+        height:70px;
+        padding:0 5%;
+    }
+
+    .nav-links a:not(.nav-track){
+        display:none;
+    }
+
+    .hero{
+        min-height:650px;
+    }
+
+    .hero h1{
+        font-size:43px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .world{
+        right:-20px;
+        top:150px;
+        font-size:200px;
+    }
+
+    .route{
+        width:360px;
+        right:-80px;
+    }
+
+    .package{
+        right:8%;
+        bottom:50px;
+    }
+
+    .track-box{
+        flex-direction:column;
+        padding:8px;
+        gap:8px;
+    }
+
+    .track-box button{
+        height:54px;
+    }
+
+    .feature-grid{
+        grid-template-columns:1fr;
+    }
+
+    .about-inner{
+        grid-template-columns:1fr;
+    }
+
+    .about-card{
+        min-height:260px;
+    }
+
+    .footer-inner{
+        flex-direction:column;
+    }
+
+    .footer-links{
+        flex-direction:column;
+        gap:15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a href="index.html" class="brand">
+
+        <div class="logo">
+            <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="46"
+                        fill="#063c2b"
+                        stroke="#d8b45a"
+                        stroke-width="3"/>
+
+                <path d="M33 31 L39 19 L50 27 L61 19 L67 31"
+                      fill="#d8b45a"/>
+
+                <path d="M20 62 C32 30 65 26 81 48"
+                      fill="none"
+                      stroke="#9be36a"
+                      stroke-width="4"
+                      stroke-linecap="round"/>
+
+                <path d="M71 40 L81 48 L69 53"
+                      fill="none"
+                      stroke="#9be36a"
+                      stroke-width="4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"/>
+
+                <text x="50" y="68"
+                      text-anchor="middle"
+                      font-size="32"
+                      font-weight="900"
+                      font-family="Arial"
+                      fill="white">GR</text>
+            </svg>
+        </div>
+
+        <div class="brand-text">
+            <strong>GHANA ROYAL</strong>
+            <span>SHIPPING</span>
+        </div>
+
+    </a>
+
+    <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#track" class="nav-track">Track Shipment</a>
+    </div>
+
+</nav>
+
+
+<section class="hero" id="track">
+
+    <div class="world">🌍</div>
+    <div class="route"></div>
+    <div class="package">📦</div>
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            International Shipping & Logistics
+        </div>
+
+        <h1>
+            Delivering Trust
+            <span>Across Every Mile.</span>
+        </h1>
+
+        <p>
+            A professional shipping and logistics experience designed
+            to help you follow your shipment from its origin to its
+            destination with confidence.
+        </p>
+
+        <p class="quote">
+            “Delivering Trust Across Every Mile.”
+        </p>
+
+        <div class="track-box">
+
+            <input
+                type="text"
+                id="trackingNumber"
+                value="GRS-2026-10482"
+                placeholder="Enter your tracking number"
+                autocomplete="off"
+            >
+
+            <button onclick="trackShipment()">
+                TRACK SHIPMENT
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="features" id="services">
+
+    <div class="section-title">
+
+        <small>OUR SERVICES</small>
+
+        <h2>Shipping made simple</h2>
+
+        <p>
+            From collection to final delivery, our platform keeps
+            shipment information organized and easy to follow.
+        </p>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+        <div class="feature">
+
+            <div class="icon">📦</div>
+
+            <h3>Ship</h3>
+
+            <p>
+                Reliable parcel handling designed for domestic
+                and international shipments.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="icon">🌍</div>
+
+            <h3>Track</h3>
+
+            <p>
+                Follow your shipment journey using a unique
+                tracking reference.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="icon">🤝</div>
+
+            <h3>Support</h3>
+
+            <p>
+                Clear shipment information gives senders and
+                recipients confidence throughout the journey.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="about" id="about">
+
+    <div class="about-inner">
+
+        <div>
+
+            <small style="color:#08734d;font-weight:bold;letter-spacing:2px;">
+                ABOUT GHANA ROYAL
+            </small>
+
+            <h2>
+                Connecting people,
+                one shipment at a time.
+            </h2>
+
+            <p>
+                Ghana Royal Shipping is a fictional logistics
+                company prototype created to demonstrate a
+                modern international shipment-tracking experience.
+            </p>
+
+            <p>
+                The platform is designed around simple tracking,
+                clear shipment milestones and a professional
+                customer experience.
+            </p>
+
+        </div>
+
+
+        <div class="about-card">
+
+            <div class="globe">🌍</div>
+
+            <div class="mini-route"></div>
+
+            <div class="mini-package">📦</div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <div class="footer-inner">
+
+        <div class="footer-brand">
+
+            <h3>GHANA ROYAL SHIPPING</h3>
+
+            <p>
+                International shipping and logistics
+                prototype focused on simple, transparent
+                shipment tracking.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="#track">Track Shipment</a>
+            <a href="#services">Services</a>
+            <a href="#about">About Us</a>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+        © 2026 Ghana Royal Shipping — Fictional prototype for demonstration purposes.
+    </div>
+
+</footer>
+
+
+<script>
+
+function trackShipment(){
+
+    const input =
+        document.getElementById("trackingNumber");
+
+    const trackingNumber =
+        input.value.trim().toUpperCase();
+
+    if(!trackingNumber){
+
+        alert("Please enter a tracking number.");
+
+        input.focus();
+
+        return;
+    }
+
+    window.location.href =
+        "tracking.html?tracking=" +
+        encodeURIComponent(trackingNumber);
+}
+
+
+document
+    .getElementById("trackingNumber")
+    .addEventListener("keydown", function(event){
+
+        if(event.key === "Enter"){
+            trackShipment();
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
